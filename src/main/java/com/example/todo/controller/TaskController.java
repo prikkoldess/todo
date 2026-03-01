@@ -16,7 +16,7 @@ public class TaskController {
 
     @GetMapping
     public List<Task> getAllTasks() {
-        return service.getALL();
+        return service.getAll();
     }
 
     @PostMapping
@@ -31,6 +31,6 @@ public class TaskController {
 
     @DeleteMapping("/{id}")
     public void deleteTask(@PathVariable Long id) {
-        service.delated(id);
+        service.deleted(id);
     }
 }

@@ -17,19 +17,22 @@ public class TaskService {
 
     public Task createTask(Task task) {
         task.setCompleted(false);
-        return repository.saveTasks(task);
+        return repository.save(task);
     }
 
-    public List<Task> getALL() {
+    public List<Task> getAll() {
         return repository.findAll();
     }
 
     public void completedTask(Long id) {
-        repository.complete(id);
+        Task task = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Task not found: " + id));
+        task.setCompleted(true);
+        repository.save(task);
     }
 
-    public void delated(Long id) {
-        repository.delatedById(id);
+    public void deleted(Long id) {
+        repository.deleteById(id);
     }
 
 }

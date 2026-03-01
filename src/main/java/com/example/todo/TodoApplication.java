@@ -8,8 +8,7 @@ import java.util.TimeZone;
 public class TodoApplication {
 
 	public static void main(String[] args) {
-		// СТАВИМ ЭТО ПЕРВЫМ ДЕЛОМ:
-		// Это принудительно меняет пояс для всего процесса ДО запуска базы
+
 		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
 
 		SpringApplication.run(TodoApplication.class, args);

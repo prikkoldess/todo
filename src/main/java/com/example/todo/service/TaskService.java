@@ -24,6 +24,11 @@ public class TaskService {
         return repository.findAll();
     }
 
+    public Task getById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Task ID " + id + " not found"));
+    }
+
     public void completedTask(Long id) {
         Task task = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Task not found: " + id));

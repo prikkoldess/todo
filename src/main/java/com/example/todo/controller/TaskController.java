@@ -14,6 +14,11 @@ public class TaskController {
         this.service = service;
     }
 
+    @GetMapping("/{id}")
+    public Task getTaskById(@PathVariable Long id) {
+        return service.getById(id);
+    }
+
     @GetMapping
     public List<Task> getAllTasks() {
         return service.getAll();

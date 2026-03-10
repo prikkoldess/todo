@@ -3,9 +3,9 @@ services:
     image: postgres:16
     container_name: todo-postgres
     environment:
-      POSTGRES_DB: testdb
-      POSTGRES_USER: sasha
-      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       TZ: Europe/Kyiv
     ports:
       - "5432:5432"
@@ -27,9 +27,9 @@ services:
         condition: service_healthy
     environment:
 
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/testdb
-      SPRING_DATASOURCE_USERNAME: sasha
-      SPRING_DATASOURCE_PASSWORD: 1234
+      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
+      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_JPA_SHOW_SQL: "true"
       TZ: Europe/Kyiv
@@ -45,9 +45,9 @@ services:
         condition: service_healthy
     environment:
 
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/testdb
-      SPRING_DATASOURCE_USERNAME: sasha
-      SPRING_DATASOURCE_PASSWORD: 1234
+      SPRING_DATASOURCE_URL: j${SPRING_DATASOURCE_URL}
+      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_JPA_SHOW_SQL: "true"
       TZ: Europe/Kyiv

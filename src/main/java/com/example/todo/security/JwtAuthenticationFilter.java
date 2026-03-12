@@ -49,6 +49,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 filterChain.doFilter(request, response);
                 return;
             }
+
             String role = jwtService.extractRole(jwt);
             var authorities = Collections.singletonList(new SimpleGrantedAuthority(role));
 

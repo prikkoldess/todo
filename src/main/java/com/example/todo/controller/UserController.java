@@ -2,6 +2,7 @@ package com.example.todo.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,10 +25,11 @@ public class UserController {
 
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<UserDto> registrUser(@RequestBody UserCreateDto request) {
-        UserDto createdUser = userService.registerUser(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
+    @PostMapping("/admin")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity<UserDto> createAdmin(@RequestBody UserCreateDto request) {
+        UserDto createdAdmin = userService.registerAdmin(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdAdmin);
     }
 
     @GetMapping("/{username}")

@@ -29,6 +29,16 @@ public class UserService {
         return mapToDto(saveUser);
     }
 
+    public UserDto registerAdmin(UserCreateDto dto) {
+        User admin = new User();
+        admin.setUsername(dto.getUsername());
+        admin.setPassword(dto.getPassword());
+        admin.setEmail(dto.getEmail());
+        admin.setRole(Role.ROLE_ADMIN);
+        User saveAdmin = userRepository.save(admin);
+        return mapToDto(saveAdmin);
+    }
+
     public UserDto getUserByUsername(String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User username " + username + " not found"));

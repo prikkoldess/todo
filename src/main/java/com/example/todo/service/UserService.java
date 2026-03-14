@@ -32,7 +32,7 @@ public class UserService {
     public UserDto registerAdmin(UserCreateDto dto) {
         User admin = new User();
         admin.setUsername(dto.getUsername());
-        admin.setPassword(dto.getPassword());
+        admin.setPassword(passwordEncoder.encode(dto.getPassword()));
         admin.setEmail(dto.getEmail());
         admin.setRole(Role.ROLE_ADMIN);
         User saveAdmin = userRepository.save(admin);

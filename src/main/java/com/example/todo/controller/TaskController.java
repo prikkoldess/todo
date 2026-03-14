@@ -6,7 +6,10 @@ import com.example.todo.model.TaskDto;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -19,33 +22,42 @@ public class TaskController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TaskDto> getTaskById(@PathVariable Long id) {
-        TaskDto taskDto = service.getById(id);
-        return ResponseEntity.ok(taskDto);
+    public ResponseEntity<TaskDto> getTaskById(@PathVariable Long id, Principal principal) {
+        return ResponseEntity.ok(service.getById(id, principal.getName()));
     }
 
-    @GetMapping
-    public ResponseEntity<List<TaskDto>> getAllTasks() {
+    @GetMapping("/all tasks")
+    public ResponseEntity<List<TaskDto>> getAllTasks(Principal principal) {
 
-        List<TaskDto> tasks = service.getAll();
-        return ResponseEntity.ok(tasks);
+        return ResponseEntity.ok(service.getAll(principal.getName()));
     }
 
-    @PostMapping
-    public ResponseEntity<TaskDto> createTask(@RequestBody TaskCreateDto requestDto) {
-        TaskDto createdTask = service.createTask(requestDto);
+    @GetMapping("/uncompleted")
+    public ResponseEntity<List<TaskDto>> getUncompletedTasks(Principal principal) {
+        return ResponseEntity.ok(service.uncompletedTasks(principal.getName()));
+    }
+
+    @GetMapping("/user/{username}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity<List<TaskDto>> getTasksByUsername(@PathVariable String username) {
+        return ResponseEntity.ok(service.getUserTasks(username));
+    }
+
+    @PostMapping("/create task")
+    public ResponseEntity<TaskDto> createTask(@RequestBody TaskCreateDto requestDto, Principal principal) {
+        TaskDto createdTask = service.createTask(requestDto, principal.getName());
         return ResponseEntity.status(HttpStatus.CREATED).body(createdTask);
     }
 
     @PutMapping("/{id}/complete")
-    public ResponseEntity<Void> completedTask(@PathVariable Long id) {
-        service.completedTask(id);
+    public ResponseEntity<Void> completedTask(@PathVariable Long id, Principal principal) {
+        service.completedTask(id, principal.getName());
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
-        service.deleteTask(id);
+    public ResponseEntity<Void> deleteTask(@PathVariable Long id, Principal principal) {
+        service.deleteTask(id, principal.getName());
         return ResponseEntity.noContent().build();
     }
 

@@ -33,6 +33,7 @@ services:
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_JPA_SHOW_SQL: "true"
       ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
       TZ: Europe/Kyiv
     ports:
       - "8080:8080"
